@@ -1,4 +1,5 @@
 phpmailer/
+css/
 .DS_Store
 config.php
 mysqli_connect.php
