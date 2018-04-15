@@ -5,6 +5,7 @@
 	// To preselect a a pull-down use selected="selected"
 	define('TITLE', 'Register');
 	include './templates/header.php';
+	include './mysqli_connect.php';
 ?>
 
 <h2>Registration Form</h2>
@@ -13,6 +14,17 @@
 <?php
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$problem = false;
+
+		if (!empty($_POST['firstName'])) {
+			if (isAlreadyRegistered($_POST['firstName'])) {
+				print '<p class="text--error">You are already registered.</p>';
+				print "<p><a href=\"login.php\">Click here</a> to login</p><br>";
+			}
+		}
+
+
+
+
 		if (empty($_POST['firstName'])) {
 			$problem = true;
 			print '<p class="text--error">Please enter your first name</p>';

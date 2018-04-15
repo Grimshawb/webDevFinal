@@ -1,5 +1,5 @@
 <?php
-	define('TITLE', 'Register');
+	define('TITLE', 'Quotes');
 	include './templates/header.php';
 ?>
 

@@ -2,7 +2,7 @@
 	session_start();
 	ob_start();
 	include './includes/functions.php';
-	//error_reporting(0);			Turn on before Submission
+	//error_reporting(0);			//Turn on before Submission
 ?><!doctype html>
 <html>
 <head>
@@ -31,13 +31,19 @@
 			<nav column="8" class="nav">
 				<ul>
 					<li><a href="books.php">Books</a></li>
-					<li><a href="stories.php">Stories</a></li>
 					<li><a href="quotes.php">Quotes</a></li>
-					<li><a href="login.php">Login</a></li>
-					<li><a href="email.php">Contact</a></li>
 					<li><a href="register.php">Register</a></li>
 					<?php
+					if (!isset($_SESSION['loggedin'])) {
+						print "<li><a href=\"login.php\">Login</a></li>";
+					}
+					if (isset($_SESSION['isAdmin'])) {
+						print "<li><a href=\"admin.php\">Admin</a></li>";
+					}
 					if (isset($_SESSION['loggedin'])) {
+						print "<li><a href=\"stories.php\">Stories</a></li>";
+						print "<li><a href=\"upload.php\">Uploads</a></li>";
+						print "<li><a href=\"email.php\">Contact</a></li>";
 						print "<li><a href=\"logout.php\">Logout</a></li>";
 					}
 					?>

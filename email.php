@@ -54,7 +54,7 @@
 		print "<p>You must login to use the email feature.</p></br>";
 		print "<p><a href=\"login.php\">Click here</a> to login</p><br>";
 		print "<p>Or.. you can jot this address down and send some mail the old-fashioned way:</p></br>";
-		print "<p>Brad Grimshaw</br>123 Hypochondria Dr</br>Detroit, MI 48201</p>";
+		print "<p>Brad Grimshaw</br>P.O. Box 123 Hypochondria Ln</br>Detroit, MI 48201</p>";
 	}
 ?>
 

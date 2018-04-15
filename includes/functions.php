@@ -10,4 +10,28 @@
 			<p><input type="submit" name="submit" value="Submit" class="button--pill"></p>
 		</form>';
   }
+
+  function isAdmin() {
+    //Query db for admin
+  }
+
+  function isAlreadyRegistered($userName) {
+    try {
+			$search_dir = './users';
+			$contents = scandir($search_dir);
+
+			foreach ($contents as $item) {
+        if ( (is_dir($search_dir . '/' . $item)) && (substr($item, 0, 1) != '.') ) {
+          if (strtok($item, '.') == $userName) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        }
+      }
+		} catch (\Exception $e) {
+
+		}
+  }
 ?>
