@@ -12,26 +12,41 @@
   }
 
   function isAdmin() {
-    //Query db for admin
+    if (!empty($_SESSION['username']) && !empty($_SESSION['password'])) {
+      $username = $_SESSION['username'];
+      $password = $_SESSION['passord'];
+
+      include '../mysqli_connect.php';
+
+      $query = "select admin from users where username='$username'
+                and password='$password'";
+
+      if ($result = mysqli_query($dbc, $query)) {
+        if ($result == 'Y') {
+          return true;
+          mysqli_close($dbc);
+        }
+      }
+    }
+    else {
+      return false;
+    }
   }
 
   function isAlreadyRegistered($userName) {
-    try {
-			$search_dir = './users';
-			$contents = scandir($search_dir);
+    //query db for userName
+    include '../mysqli_connect.php';
 
-			foreach ($contents as $item) {
-        if ( (is_dir($search_dir . '/' . $item)) && (substr($item, 0, 1) != '.') ) {
-          if (strtok($item, '.') == $userName) {
-            return true;
-          }
-          else {
-            return false;
-          }
-        }
-      }
-		} catch (\Exception $e) {
+    $query = "select * from users where username='$username'";
+    $result = mysqli_query($dbc, $query);
+    $numRows = mysqli_num_rows($result);
+    if ($numRows == 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
 
-		}
+    mysqli_close($dbc);
   }
 ?>

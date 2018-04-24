@@ -6,19 +6,35 @@
 <p>Users that log in can take advantage of more features</p>
 
 <?php
-	// This is an example of one page that handles display and form submission
-	// This tests whether the form has been submitted
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		//handle form
-		if ( (!empty($_POST['email'])) && (!empty($_POST['password']))) {
-			if ( (strtolower($_POST['email']) == 'test@example.com') && ( ($_POST['password']) == 'testuser')) {
+		if ((!empty($_POST['userName'])) && (!empty($_POST['password']))) {
+
+			include '../mysqli_connect.php';
+
+			$username = $_POST['userName'];
+			$password = mysqli_real_escape_string($dbc, stripslashes($_POST['password']));
+			$password = password_hash($_POST['password'], DEFAULT_PASSWORD);
+
+			$query = "select * from users where username='$username' and password='$password'";
+			$result = mysqli_query($dbc, $query);
+			$numRows = mysqli_num_rows($result);
+			if ($numRows == 1) {
+				$_SESSION['username'] = $_POST['userName'];
 				$_SESSION['loggedin'] = time();
-				ob_end_clean();		// Destroys page buffer
-				header('Location: email.php');	// Sends user to new page
-				exit();		// Terminates execution of remainder of script
+				if (isAdmin()) {
+					$_SESSION['admin'] = true;
+				}
+				else {
+					$_SESSION['admin'] = false;
+				}
+				header('Location: index.php');
+				mysqli_close($dbc);
+				ob_end_clean();
+				exit();
 			}
 			else {
-				print '<p class="text--error">The submitted email and password do not match our records</p>';
+				print '<p class="text--error">The email and password do not match our records</p>';
 			}
 		}
 		else {
@@ -27,7 +43,7 @@
 	}
 	else {
 		print '<form action="login.php" method="post" class="form--inline">
-			<p><label for="email">Email Address:</label><input type="email" name="email" size="20"></p>
+			<p><label for="text">Username:</label><input type="text" name="userName" size="20"></p>
 			<br><br>
 			<p><label for="password">Password:</label><input type="password" name="password" size="20"></p>
 			<br><br>
