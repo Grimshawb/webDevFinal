@@ -1,6 +1,12 @@
 <?php
 	define('TITLE', 'Register');
 	include './templates/header.php';
+
+	if (isloggedin()) {
+		header('Location: index.php');
+		ob_end_clean();
+		exit();
+	}
 ?>
 
 <h2>Registration Form</h2>
@@ -8,36 +14,38 @@
 
 <?php
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$problem = false;
+
+		include './includes/errorMessages.php';
+
+		$problem           = false;
+		$alreadyRegistered = false;
+		$noUserName        = false;
+		$noPassword1			 = false;
+		$noPassword2 			 = false;
+		$passwordMismatch  = false;
 
 		if (!empty($_POST['userName'])) {
 			if (isAlreadyRegistered($_POST['userName'])) {
 				$problem = true;
-				$_POST = [];
-				print '<p class="input--error">This username is already registered.</p>';
-				print "<p><a href=\"login.php\">Click here</a> to login</p><br>";
+				$alreadyRegistered = true;
 			}
 		}
 
 		if (empty($_POST['userName']) && !$problem) {
 			$problem = true;
-			$_POST = [];
-			print '<p class="input--error">Please enter a user name</p>';
+			$noUserName = true;
 		}
 		if (empty($_POST['password1']) && !$problem) {
 			$problem = true;
-			$_POST = [];
-			print '<p class="input--error">Please enter a password</p>';
+			$noPassword1 = true;
 		}
 		if (empty($_POST['password2']) && !$problem) {
 			$problem = true;
-			$_POST = [];
-			print '<p class="input--error">Please confirm your password</p>';
+			$noPassword2 = true;
 		}
 		if (($_POST['password1'] != $_POST['password2']) && !$problem) {
 			$problem = true;
-			$_POST = [];
-			print '<p class="input--error">Your passwords do not match</p>';
+			$passwordMismatch = true;
 		}
 
 		if (!$problem) {
@@ -71,7 +79,19 @@
 			mysqli_close($dbc);
 		}
 		else {
-			print '<p class="input--error">Please try again</p>';
+			if ($problem) {
+				print '<p class="input--error">';
+				if ($alreadyRegistered) {print $alreadyRegisteredError . "<br>";}
+				if ($noUserName) {print $noUserNameError . "<br>";}
+				if ($noPassword1) {print $enterPasswordError . "<br>";}
+				if ($noPassword2) {print $confirmPasswordError . "<br>";}
+				if ($passwordMismatch) {print $passwordMismatchError . "<br>";}
+			}
+			else {
+				print 'We experienced an unexpected error. Please try again';
+			}
+			print '</p>';
+			$_POST = [];
 		}
 	}
 ?>

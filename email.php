@@ -36,31 +36,30 @@
 	    }
 	    else
 	    {
-	        print '<p class="input--error">Message Sent</p>';
+	        print '<p class="input--success">Message Sent</p>';
 	    }
 		}
 		else {
-			if (empty($_POST['email'])) {
-				print '<p style="color: red;">You must enter an email address</p><br>';
-			}
-			if (empty($_POST['email'])) {
-				print '<p style="color: red;">You must enter a subject</p><br>';
-			}
-			if (empty($_POST['email'])) {
-				print '<p style="color: red;">You must enter a message</p>';
-			}
+			include './includes/errorMessages.php';
+			print '<p class="input--error">';
+			if (empty($_POST['email'])) {print $emptyEmailError . '<br>';}
+			if (empty($_POST['subject'])) {print $emptySubjectError . '<br>';}
+			if (empty($_POST['message'])) {print $emptyMessageError . '<br>';}
+			print '</p>';
 			print '<form action="email.php" method="post" class="form--inline">
-				<p>Email Address: <input type="email" name="email" size="20"></p>
+				<p>Email Address: <input type="email" name="email" size="20" value="' .
+				$_POST['email'] . '"></p>
 				<br>
-				<p>Subject: <input type="text" name="subject" size="20"></p><br>
+				<p>Subject: <input type="text" name="subject" size="20" value="' .
+				$_POST['subject'] . '"></p><br>
 	      <p>Message:</p>
-				<p><textarea name="message" rows="10" cols="60"></textarea></p>
+				<p><textarea name="message" rows="10" cols="60">' . $_POST['message'] .'</textarea></p>
 				<br><br>
 				<p><input type="submit" name="submit" value="Submit" class="button--pill"></p>
 						</form>';
 		}
 	}
-	else if (isset($_SESSION['loggedin']) && ($_SERVER['REQUEST_METHOD'] == 'GET')) {
+	else {
 		print '<form action="email.php" method="post" class="form--inline">
 			<p>Email Address: <input type="email" name="email" size="20"></p>
 			<br>
@@ -71,15 +70,4 @@
 			<p><input type="submit" name="submit" value="Submit" class="button--pill"></p>
 					</form>';
 	}
-	else {
-		print "<p>You must login to use the email feature.</p></br>";
-		print "<p><a href=\"login.php\">Click here</a> to login</p><br>";
-		print "<p>Or.. you can jot this address down and send some mail the old-fashioned way:</p></br>";
-		print "<p>Brad Grimshaw</br>P.O. Box 123 Hypochondria Ln</br>Detroit, MI 48201</p>";
-	}
-?>
-
-
-
-<?php
 	include './templates/footer.php';

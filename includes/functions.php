@@ -21,7 +21,6 @@
   }
 
   function isAlreadyRegistered($userName) {
-    //query db for userName
     include '../mysqli_connect.php';
 
     $query = "SELECT * FROM users WHERE username='$userName'";

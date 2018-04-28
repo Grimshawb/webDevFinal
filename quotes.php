@@ -5,7 +5,7 @@
 	print '<h2>Quotes</h2>';
 
 	if (isset($_SESSION['loggedin'])) {
-		print '<h4><a href="add_quote.php">Add Quote</a></h4><br><br>';
+		print '<h4><a href="add_quote.php">Add New Quote</a></h4><br>';
 	}
 
 	include '../mysqli_connect.php';
@@ -15,14 +15,19 @@
 	if ($result = mysqli_query($dbc, $query)) {
 		while ($row = mysqli_fetch_array($result)) {
 
-			print "<div><blockquote>{$row['text']}</blockquote>- <em>{$row['author']}";
+			print "<div><blockquote style=\"font-weight: normal;\">{$row['text']} ";
 
 			if ($row['favorite'] == 'Y') {
-				print ' <span style="color:red;">Favorite!</span><br>';
+				print ' <span style="color:red; font-weight: bolder;">Favorite!</span></blockquote>';
+			}
+			else {
+				print '</blockquote>';
 			}
 
+			print "- <em style=\"font-weight: normal;\">{$row['author']}</em>";
+
 			if (isLoggedIn()) {
-				print "</em><p><b><a href=\"update_quote.php?id={$row['id']}\">Edit</a>
+				print "<p><b><a href=\"update_quote.php?id={$row['id']}\">Edit</a>
 					<a href=\"delete_quote.php?id={$row['id']}\">Delete</a></p>";
 			}
 

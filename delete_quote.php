@@ -20,14 +20,20 @@
 			$row = mysqli_fetch_array($result);
 
 			print '<form class="form--inline" action="delete_quote.php" method="post">
-						<p>Are you sure you want to delete this quote?</p>
-						<div><blockquote>' . $row['text'] . '</blockquote><em>- ' . $row['author'];
+						<p>Are you sure you want to delete this quote?</p>';
+
+			print "<div><blockquote style=\"font-weight: normal;\">{$row['text']} ";
 
 			if ($row['favorite'] == 'Y') {
-				print ' <span style="color:red;">Favorite!</span><br>';
+				print ' <span style="color:red; font-weight: bolder;">Favorite!</span></blockquote>';
+			}
+			else {
+				print '</blockquote>';
 			}
 
-			print '</em></div><br><input type="hidden" name="id" value="' . $_GET['id'] . '">
+			print "- <em style=\"font-weight: normal;\">{$row['author']}</em>";
+
+			print '</div><br><input type="hidden" name="id" value="' . $_GET['id'] . '">
 						<p><input type="submit" name="submit" value="Delete Quote" class="button--pill"></p>
 						</form>';
 
@@ -45,12 +51,13 @@
 			print '<p class="input--success">The quote entry has been deleted.</p>';
 		}
 		else {
-			print '<p class="error">Could not delete the blog entry because:<br>' . mysqli_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
+			print '<p class="input--error">An unexpected error prevented us from deleting this quote.<br>
+						Please try again.</p>';
 		}
 
 	}
 	else {
-		print '<p class="error">This page has been accessed in error.</p>';
+		print '<p class="input--error">This page has been accessed in error.</p>';
 	}
 
 	mysqli_close($dbc);

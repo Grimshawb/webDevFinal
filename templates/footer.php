@@ -6,7 +6,7 @@
 			<?php
 				date_default_timezone_set('America/Chicago');
 
-				print date('g:i a l F j');
+				print date('g:i a l F j Y');
 			?>
 		</p>
 	</footer>

@@ -2,6 +2,12 @@
 	define('TITLE', 'Login');
 	include './templates/header.php';
 
+	if (isloggedin()) {
+		header('Location: index.php');
+		ob_end_clean();
+		exit();
+	}
+
 	print '<h2>Login Form</h2>
 				<p>Users that log in can access additional features</p>';
 
