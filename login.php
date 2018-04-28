@@ -10,6 +10,13 @@
 
 	print '<h2>Login Form</h2>
 				<p>Users that log in can access additional features</p>';
+	print '<form action="login.php" method="post" class="form--inline">
+				<p><label for="text">Username:</label><input type="text" name="userName" size="20"></p>
+				<br>
+				<p><label for="password">Password:</label><input type="password" name="password" size="20"></p>
+				<br><br>
+				<p><input type="submit" name="submit" value="Login" class="button--pill"></p>
+				</form>';
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -49,15 +56,6 @@
 		else {
 			print '<p class="input--error">Please make sure you enter both a username and a password</p>';
 		}
-	}
-	else {
-		print '<form action="login.php" method="post" class="form--inline">
-					<p><label for="text">Username:</label><input type="text" name="userName" size="20"></p>
-					<br>
-					<p><label for="password">Password:</label><input type="password" name="password" size="20"></p>
-					<br><br>
-					<p><input type="submit" name="submit" value="Login" class="button--pill"></p>
-						</form>';
 	}
 
 	include './templates/footer.php';

@@ -1,5 +1,5 @@
 <?php
-	define('TITLE', 'Register');
+	define('TITLE', 'Account Status');
 	include './templates/header.php';
 
 	if (!isloggedin() && !isAdmin()) {
@@ -8,9 +8,11 @@
 		exit();
 	}
 
+	print '<h2>Administration Functions</h2>';
+
 	include '../mysqli_connect.php';
 	$username = isset($_POST['choice']) ? $_POST['choice'] : $_POST['user'];
-	print 'Username: ' . $username;
+	print '<p>Username: <span style="font-weight:bolder;">' . $username . '</span></p>';
 
 	if (isset($_POST['sub'])) {
 		$query = "SELECT status, admin FROM users WHERE username='$username'";

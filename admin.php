@@ -8,6 +8,8 @@
 		exit();
 	}
 
+	print '<h2>Account Administration</h2>';
+
 	include '../mysqli_connect.php';
 
 	$query = 'SELECT username FROM users';
