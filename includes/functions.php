@@ -1,28 +1,15 @@
 <?php
-  function printEmailForm() {
-    print '<form action="email.php" method="post" class="form--inline">
-			<p><label for="email">Email Address:</label><input type="email" name="email" size="20"></p>
-			<br><br>
-			<p><label for="subject">Subject:</label><input type="text" name="subject" size="20"></p><br><br>
-      <p>Message:</p>
-			<p><textarea name="message" rows="10" cols="60"></textarea></p>
-			<br><br>
-			<p><input type="submit" name="submit" value="Submit" class="button--pill"></p>
-		</form>';
-  }
-
   function isAdmin() {
-    if (!empty($_SESSION['username']) && !empty($_SESSION['password'])) {
+    if (!empty($_SESSION['username']) && !empty($_SESSION['loggedin'])) {
       $username = $_SESSION['username'];
-      $password = $_SESSION['passord'];
 
       include '../mysqli_connect.php';
 
-      $query = "select admin from users where username='$username'
-                and password='$password'";
+      $query = "SELECT admin FROM users WHERE username='$username'";
 
       if ($result = mysqli_query($dbc, $query)) {
-        if ($result == 'Y') {
+        $isAdmin = mysqli_fetch_array($result);
+        if ($isAdmin['admin'] == 'Y') {
           return true;
           mysqli_close($dbc);
         }
@@ -37,7 +24,7 @@
     //query db for userName
     include '../mysqli_connect.php';
 
-    $query = "select * from users where username='$username'";
+    $query = "SELECT * FROM users WHERE username='$userName'";
     $result = mysqli_query($dbc, $query);
     $numRows = mysqli_num_rows($result);
     if ($numRows == 1) {
@@ -48,5 +35,36 @@
     }
 
     mysqli_close($dbc);
+  }
+
+  function isLoggedIn() {
+    if (isset($_SESSION['username']) && isset($_SESSION['loggedin'])) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  function deleteUserDir($dir) {
+
+    $contents = scandir($dir);
+
+    foreach ($contents as $item) {
+      if ($item != '.' && $item != '..') {
+        if (is_file($dir . '/' . $item)) {
+          try {
+            unlink($dir . '/' . $item);
+          } catch (\Exception $e) {
+            print 'Exception: ' . $e;
+          }
+        }
+        else {
+          deleteUserDir(realpath($item));
+        }
+      }
+    }
+
+    rmdir($dir);
   }
 ?>

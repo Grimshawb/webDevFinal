@@ -1,10 +1,13 @@
 <?php
-	// constants & variables declared before the include or require are available to the
-	// included document - see books.php
 	include('./templates/header.php');
-	// or include 'header.html';
-	// Directory above this one:  	'../file.php'
+
+	if ($_SESSION['loginFlag']) {
+		print '<p class="input--success">You are now logged in</p>';
+		$_SESSION['loginFlag'] = false;
+	}
+
 ?>
+
 <p>
 	<h1>Brad Grimshaw Fan Club</h1>
 	<p>Number of members: You and Brad Grimshaw</p>
@@ -12,6 +15,6 @@
 	<p>Otherwise, you're probably in the wrong place. You have no idea who Brad Grimshaw is do you?</p>
 	<p>You have no business here. Get out of here.</p>
 </p>
+
 <?php
 	include('./templates/footer.php');
-	// final php tag not necessary, some say it runs faster without it

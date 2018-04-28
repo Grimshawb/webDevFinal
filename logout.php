@@ -1,6 +1,7 @@
 <?php
 	define('TITLE', 'Logout');
 	include './templates/header.php';
+	$_POST = [];
 	$_SESSION = [];
 	session_destroy();
 	ob_end_clean();

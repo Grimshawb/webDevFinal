@@ -2,7 +2,7 @@
 	session_start();
 	ob_start();
 	include './includes/functions.php';
-	//error_reporting(0);			//Turn on before Submission
+	error_reporting(0);
 ?><!doctype html>
 <html>
 <head>
@@ -11,12 +11,12 @@
 	<meta name="viewport" content="width-device-width, initial-scale=1.0">
 	<meta name="Handheld Friendly" content="True">
 	<title>
-		<?
+		<?php
 			if (defined('TITLE')) {
 				print TITLE;
 			}
 			else {
-				print 'Raise High the Roof Beam';
+				print 'Raise High the Moon Beam';
 			}
 		?>
 	</title>
@@ -32,12 +32,12 @@
 				<ul>
 					<li><a href="books.php">Books</a></li>
 					<li><a href="quotes.php">Quotes</a></li>
-					<li><a href="register.php">Register</a></li>
 					<?php
 					if (!isset($_SESSION['loggedin'])) {
 						print "<li><a href=\"login.php\">Login</a></li>";
+						print "<li><a href=\"register.php\">Register</a></li>";
 					}
-					if (isset($_SESSION['isAdmin'])) {
+					if ($_SESSION['admin']) {
 						print "<li><a href=\"admin.php\">Admin</a></li>";
 					}
 					if (isset($_SESSION['loggedin'])) {
