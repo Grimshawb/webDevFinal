@@ -12,6 +12,13 @@
 <h2>Registration Form</h2>
 <p>Register to take advantage of additional features!</p>
 
+<form action="register.php" method="post" class="form--inline">
+	<p><label for="firstName">User Name:</label><input type="text" name="userName" size="20"></p>
+	<p><label for="password">Password: </label><input type="password" name="password1" size="20"></p>
+	<p><label for="password">Confirm Password: </label><input type="password" name="password2" size="20"></p>
+	<p><input type="submit" name="submit" value="Register" class="button--pill"></p>
+</form>
+
 <?php
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -72,9 +79,9 @@
 
 			$_POST = [];
 
-			print '<p class="input--success">You are now registered<br></p>';
-			print "<p>Thank you, $userName, for registering with the Brad Grimshaw Fan Club</p>";
-			print "<p><a href=\"login.php\">Click here</a> to login</p><br>";
+			print '<p class="input--success">You are now registered<br>';
+			print "Thank you, $userName, for registering with the Brad Grimshaw Fan Club<br>";
+			print "<a href=\"login.php\">Click here</a> to login</p><br>";
 
 			mysqli_close($dbc);
 		}
@@ -94,13 +101,5 @@
 			$_POST = [];
 		}
 	}
-?>
-<form action="register.php" method="post" class="form--inline">
-	<p><label for="firstName">User Name:</label><input type="text" name="userName" size="20"></p>
-	<p><label for="password">Password: </label><input type="password" name="password1" size="20"></p>
-	<p><label for="password">Confirm Password: </label><input type="password" name="password2" size="20"></p>
-	<p><input type="submit" name="submit" value="Register" class="button--pill"></p>
-</form>
 
-<?php
 	include './templates/footer.php';
