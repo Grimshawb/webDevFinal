@@ -28,6 +28,7 @@
 
 			if (isLoggedIn()) {
 				print "<p><b><a href=\"update_quote.php?id={$row['id']}\">Edit</a>
+					<span> | </span>
 					<a href=\"delete_quote.php?id={$row['id']}\">Delete</a></p>";
 			}
 

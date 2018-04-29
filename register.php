@@ -38,19 +38,19 @@
 			}
 		}
 
-		if (empty($_POST['userName']) && !$problem) {
+		if (empty($_POST['userName'])) {
 			$problem = true;
 			$noUserName = true;
 		}
-		if (empty($_POST['password1']) && !$problem) {
+		if (empty($_POST['password1'])) {
 			$problem = true;
 			$noPassword1 = true;
 		}
-		if (empty($_POST['password2']) && !$problem) {
+		if (empty($_POST['password2'])) {
 			$problem = true;
 			$noPassword2 = true;
 		}
-		if (($_POST['password1'] != $_POST['password2']) && !$problem) {
+		if (!$noPassword1 && !$noPassword2 && ($_POST['password1'] != $_POST['password2'])) {
 			$problem = true;
 			$passwordMismatch = true;
 		}
